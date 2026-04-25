@@ -1,0 +1,50 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+    <head>
+      <link rel="stylesheet" href="main.css" type="text/css">
+      <title>My Website</title>
+    </head>
+
+    <header>
+        <h1>Baby Plant</h1>
+    </header>
+
+    <nav class="navbar">
+        <a href="homepage.html">Home</a>
+        <br>
+        <a href="index.html">Track your plant</a>
+        
+
+    </nav>
+
+    <body>
+      <h1>Plant's moisture level reading</h1>
+      <div>
+      <label for="percentage">Percentage:</label>
+      <input type="number" id="percentage" name="percentage" min="0" max="100">%
+      </div>
+
+      <div id="data">Loading...</div>
+
+      <script>
+
+        async function getData() {
+          const res = await fetch('/data');
+          const text = await res.text();
+          const value = Number(text.replace('%', '').trim());
+          document.getElementById("data").textContent = text;
+          
+          let threshold = 10;
+          if (value < threshold) {
+            alert("Low moisture level");
+            }
+        }
+
+
+        getData();
+        setInterval(getData, 10000);
+      </script>
+
+    </body>
+</html>
